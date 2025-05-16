@@ -1,0 +1,34 @@
+<div class="container mt-3 ">
+  <div class="row justify-content-center">
+  <div class="card  col-md-6">
+    <div class="card-header">
+      New Customer
+    </div>
+    <div class="card-body" *ngIf="formGroup">
+      <form [formGroup]="formGroup" (ngSubmit)="handleSaveCustomer()">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control"
+                 [class.is-invalid]="formGroup.controls['name'].touched && formGroup.controls['name'].errors"
+                 formControlName="name">
+          <div class="invalid-feedback" *ngIf="formGroup.controls['name'].touched">
+            <span *ngIf="formGroup.controls['name'].errors?.['required']">Name is required</span>
+            <span *ngIf="formGroup.controls['name'].errors?.['minlength']">Name must be at least 4 characters</span>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control"
+                 [class.is-invalid]="formGroup.controls['email'].touched && formGroup.controls['email'].errors"
+                 formControlName="email">
+          <div class="invalid-feedback" *ngIf="formGroup.controls['email'].touched">
+            <span *ngIf="formGroup.controls['email'].errors?.['required']">Email is required</span>
+            <span *ngIf="formGroup.controls['email'].errors?.['email']">Please enter a valid email address</span>
+          </div>
+        </div>
+        <button [disabled]="!formGroup.valid" class="btn btn-success">Save</button>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
