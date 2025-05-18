@@ -1,8 +1,11 @@
 # Digital Banking Web Application
+![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?&style=for-the-badge&logo=angular&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?&style=for-the-badge&logo=spring&logoColor=white)
+[![GitHub](https://img.shields.io/badge/Github:_Backend-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ismail-Drissi-ENSET-TPs/Digital-Banking-App)
 
 ## Overview
 
-The **Digital Banking Web Application** is a modern web-based platform designed to manage banking operations efficiently. It allows users to perform various banking tasks such as managing accounts, viewing transactions, and transferring funds. The application is built with a focus on scalability, security, and user experience.
+The **Digital Banking Web Application** is a web-based platform designed to manage banking operations. It allows users to perform various banking tasks such as managing accounts, viewing transactions, and transferring funds.
 
 ## Features
 
@@ -15,47 +18,17 @@ The **Digital Banking Web Application** is a modern web-based platform designed 
 
 ## Technologies Used
 
-- **Frontend**: React, HTML, CSS, JavaScript
+- **Frontend**: Angular
 - **Backend**: Spring Boot, Java
 - **Database**: MySQL
-- **API**: RESTful APIs for communication between frontend and backend
-- **Build Tools**: Maven
-- **Version Control**: Git
-
-## Prerequisites
-
-Before setting up the project, ensure you have the following installed:
-
-- Java 17 or higher
-- Node.js and npm
-- MySQL Server
-- Maven
-- Git
 
 ## Setup Instructions
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-repo/digital-banking-web.git
+   git clone https://github.com/Ismail-Drissi-ENSET-TPs/Digital-Banking-App-Web.git
    cd digital-banking-web
    ```
-
-2. **Backend Setup**:
-   - Navigate to the backend directory:
-     ```bash
-     cd backend
-     ```
-   - Configure the database connection in `application.properties`:
-     ```properties
-     spring.datasource.url=jdbc:mysql://localhost:3306/digital_banking
-     spring.datasource.username=your_username
-     spring.datasource.password=your_password
-     ```
-   - Build and run the backend:
-     ```bash
-     mvn clean install
-     mvn spring-boot:run
-     ```
 
 3. **Frontend Setup**:
    - Navigate to the frontend directory:
@@ -72,8 +45,7 @@ Before setting up the project, ensure you have the following installed:
      ```
 
 4. **Access the Application**:
-   - Open your browser and navigate to `http://localhost:3000` for the frontend.
-   - The backend API will be available at `http://localhost:8080`.
+   - Open your browser and navigate to `http://localhost:4200` for the frontend.
 
 ## Usage
 
