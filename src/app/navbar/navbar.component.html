@@ -1,23 +1,50 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">E-Bank</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+  <div class="container-fluid px-4">
+    <a class="navbar-brand fw-bold" routerLink="/">
+      <i class="bi bi-bank"></i> E-Bank
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <!-- Main Navigation -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="authService.isAuthenticated">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="customersDropdown" role="button"
-             data-bs-toggle="dropdown" aria-expanded="false">
-            Customers
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+             aria-expanded="false">
+            <i class="bi bi-people"></i> Customers
           </a>
-          <ul class="dropdown-menu" aria-labelledby="customersDropdown">
-            <li><a class="dropdown-item" routerLink="/customers">List Customers</a></li>
-            <li><a class="dropdown-item" routerLink="/new-customer">Create Customer</a></li>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/admin/customers" routerLinkActive="active">
+              <i class="bi bi-list"></i> List Customers
+            </a></li>
+            <li><a class="dropdown-item" routerLink="/admin/new-customer" routerLinkActive="active">
+              <i class="bi bi-person-plus"></i> New Customer
+            </a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/accounts">Accounts</a>
+          <a class="nav-link" routerLink="/admin/accounts" routerLinkActive="active">
+            <i class="bi bi-wallet2"></i> Accounts
+          </a>
+        </li>
+      </ul>
+
+      <!-- User Menu -->
+      <ul class="navbar-nav ms-auto" *ngIf="authService.isAuthenticated">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+             aria-expanded="false">
+            <i class="bi bi-person-circle"></i> {{authService.username}}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#" (click)="handleLogout()">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </a></li>
+          </ul>
         </li>
       </ul>
     </div>
