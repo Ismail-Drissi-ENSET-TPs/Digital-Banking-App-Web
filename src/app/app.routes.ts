@@ -7,6 +7,7 @@ import {AdminTemplateComponent} from './admin-template/admin-template.component'
 import {authenticationGuard} from './guards/authentication.guard';
 import {NotAuthorizedComponent} from './not-authorized/not-authorized.component';
 import {authorizationGuard} from './guards/authorization.guard';
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,9 @@ export const routes: Routes = [
   },
   {
     path: "admin", component: AdminTemplateComponent, canActivate: [authenticationGuard], children:[
-
+      {
+        path:"", component: DashboardComponent
+      },
       {
         path:"customers", component: CustomersComponent
       },

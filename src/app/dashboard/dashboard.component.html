@@ -1,1 +1,88 @@
-<p>dashboard works!</p>
+<div class="container-fluid py-3">
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="card-title mb-0">Total Customers</h6>
+              <h2 class="mt-2 mb-0">{{totalCustomers}}</h2>
+            </div>
+            <i class="bi bi-people display-4"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="card-title mb-0">Total Accounts</h6>
+              <h2 class="mt-2 mb-0">{{totalAccounts}}</h2>
+            </div>
+            <i class="bi bi-wallet2 display-4"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-info text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="card-title mb-0">Total Operations</h6>
+              <h2 class="mt-2 mb-0">{{totalOperations}}</h2>
+            </div>
+            <i class="bi bi-arrow-left-right display-4"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-warning text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="card-title mb-0">Total Balance</h6>
+              <h2 class="mt-2 mb-0">{{totalBalance | currency}}</h2>
+            </div>
+            <i class="bi bi-cash-stack display-4"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="row g-3">
+    <!-- Operations by Type -->
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header">Operations by Type</div>
+        <div class="card-body">
+          <canvas baseChart
+                  [data]="operationsChartData"
+                  [type]="'doughnut'"
+                  [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly Transactions -->
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-header">Monthly Transactions</div>
+        <div class="card-body">
+          <canvas baseChart
+                  [data]="monthlyChartData"
+                  [type]="'line'"
+                  [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

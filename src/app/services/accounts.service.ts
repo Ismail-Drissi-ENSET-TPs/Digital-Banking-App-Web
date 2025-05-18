@@ -23,7 +23,11 @@ export class AccountsService {
     return this.http.post(environment.backendHost+"/accounts/credit",data);
   }
   public transfer(accountSource: string,accountDestination: string, amount : number, description:string){
-    let data={accountSource, accountDestination, amount, description }
+    let data={senderAccountId: accountSource, receiverAccountId: accountDestination, balance: amount, description }
     return this.http.post(environment.backendHost+"/accounts/transfer",data);
+  }
+
+  public getAccounts(): Observable<Array<AccountDetails>>{
+    return this.http.get<Array<AccountDetails>>(environment.backendHost + "/accounts/histories");
   }
 }
