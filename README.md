@@ -1,59 +1,104 @@
-# DigitalBankingWeb
+# Digital Banking Web Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
+## Overview
 
-## Development server
+The **Digital Banking Web Application** is a modern web-based platform designed to manage banking operations efficiently. It allows users to perform various banking tasks such as managing accounts, viewing transactions, and transferring funds. The application is built with a focus on scalability, security, and user experience.
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
-```
+- **User Authentication**: Secure login and registration system.
+- **Account Management**: Create, view, and manage multiple bank accounts.
+- **Transaction History**: View detailed transaction records.
+- **Fund Transfers**: Transfer money between accounts.
+- **Admin Dashboard**: Manage users and accounts with administrative privileges.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Technologies Used
 
-## Code scaffolding
+- **Frontend**: React, HTML, CSS, JavaScript
+- **Backend**: Spring Boot, Java
+- **Database**: MySQL
+- **API**: RESTful APIs for communication between frontend and backend
+- **Build Tools**: Maven
+- **Version Control**: Git
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Prerequisites
 
-```bash
-ng generate component component-name
-```
+Before setting up the project, ensure you have the following installed:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Java 17 or higher
+- Node.js and npm
+- MySQL Server
+- Maven
+- Git
 
-```bash
-ng generate --help
-```
+## Setup Instructions
 
-## Building
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-repo/digital-banking-web.git
+   cd digital-banking-web
+   ```
 
-To build the project run:
+2. **Backend Setup**:
+   - Navigate to the backend directory:
+     ```bash
+     cd backend
+     ```
+   - Configure the database connection in `application.properties`:
+     ```properties
+     spring.datasource.url=jdbc:mysql://localhost:3306/digital_banking
+     spring.datasource.username=your_username
+     spring.datasource.password=your_password
+     ```
+   - Build and run the backend:
+     ```bash
+     mvn clean install
+     mvn spring-boot:run
+     ```
 
-```bash
-ng build
-```
+3. **Frontend Setup**:
+   - Navigate to the frontend directory:
+     ```bash
+     cd frontend
+     ```
+   - Install dependencies:
+     ```bash
+     npm install
+     ```
+   - Start the development server:
+     ```bash
+     npm start
+     ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+4. **Access the Application**:
+   - Open your browser and navigate to `http://localhost:3000` for the frontend.
+   - The backend API will be available at `http://localhost:8080`.
 
-## Running unit tests
+## Usage
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **User Login**: Use your credentials to log in or register a new account.
+- **Account Management**: Navigate to the accounts section to view or create accounts.
+- **Transactions**: View transaction history or initiate fund transfers.
+- **Admin Features**: Access the admin dashboard for user and account management.
 
-```bash
-ng test
-```
+## Screenshots
 
-## Running end-to-end tests
+Here are some screenshots of the application:
 
-For end-to-end (e2e) testing, run:
+### Login Page
+![Login Page](./screenshot/login.png)
 
-```bash
-ng e2e
-```
+### Dashboard
+![Dashboard](./screenshot/dashboard.png)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Customers Management
+![Customers Management](./screenshot/customers.png)
 
-## Additional Resources
+### Accounts Management
+![Accounts Management](./screenshot/accounts.png)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Unauthorized Access Page
+![Unauthorized Access Page](./screenshot/unauthrozied-page.png)
+
+`
