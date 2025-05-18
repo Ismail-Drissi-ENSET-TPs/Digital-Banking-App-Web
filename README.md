@@ -9,7 +9,7 @@ The **Digital Banking Web Application** is a web-based platform designed to mana
 
 ## Features
 
-- **User Authentication**: Secure login and registration system.
+- **User Authentication**: Secure login system.
 - **Account Management**: Create, view, and manage multiple bank accounts.
 - **Transaction History**: View detailed transaction records.
 - **Fund Transfers**: Transfer money between accounts.
