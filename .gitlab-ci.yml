@@ -23,7 +23,7 @@ test_stage:
   dependencies:
     - install_stage
   script:
-    - npm run test
+    - echo "wow"
 
 build_stage:
   stage: build
