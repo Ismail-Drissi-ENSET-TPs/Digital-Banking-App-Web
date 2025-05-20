@@ -34,6 +34,7 @@ export class NewCustomerComponent {
     this.customerService.saveCustomer(customer).subscribe({
       next: (value) => {
         alert("Customer is saved successfully");
+        customer = value;
         this.formGroup?.reset();
       },
       error: (error) => {

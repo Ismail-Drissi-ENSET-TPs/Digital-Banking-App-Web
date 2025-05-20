@@ -12,7 +12,6 @@ import { AccountOperation } from '../models/account.model';
   standalone: true,
   imports: [
     CurrencyPipe,
-    DatePipe,
     BaseChartDirective
   ],
   styleUrls: ['./dashboard.component.css']
