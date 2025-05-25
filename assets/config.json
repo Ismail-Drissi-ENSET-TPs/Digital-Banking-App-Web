@@ -1,0 +1,5 @@
+{
+  "backendHost": "http://digital-bank-backend",
+  "backendPort": "8020",
+  "port": "4200"
+}

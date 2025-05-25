@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+// No need for HttpClient
+
+// Importing the file statically (bundled at build time)
+import configJson from '../../../assets/config.json'; // adjust path if needed
 
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
-  private config: any = null;
+  private config: any = configJson;
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
+  // This is no longer asynchronous
   loadConfig() {
-    return this.http.get('/assets/config.json')
-      .toPromise()
-      .then(config => this.config = config);
+    return Promise.resolve(); // To keep compatibility
   }
 
   get backendHost(): string {
     return this.config?.backendHost
       ? `http://${this.config.backendHost}:${this.config.backendPort}`
-      : 'http://localhost:8082';  }
+      : 'http://localhost:8082';
+  }
 }
