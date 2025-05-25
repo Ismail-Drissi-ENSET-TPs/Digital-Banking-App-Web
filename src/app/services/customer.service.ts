@@ -1,30 +1,38 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Customer} from '../models/customer.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Customer } from '../models/customer.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  customers: any;
+  private apiUrl = environment.backendHost;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {}
+
+  public getCustomers(): Observable<Array<Customer>> {
+    return this.http.get<Array<Customer>>(`${this.apiUrl}/customers`);
   }
 
-  public getCustomers(): Observable<Array<Customer>>{
-    return this.http.get<Array<Customer>>("http://localhost:8082/customers");
+  public searchCustomers(keyword: string = ""): Observable<Array<Customer>> {
+    return this.http.get<Array<Customer>>(`${this.apiUrl}/customers/search?k=${keyword}`);
   }
 
-  public searchCustomers(keyword:String = ""): Observable<Array<Customer>>{
-    return this.http.get<Array<Customer>>("http://localhost:8082/customers/search?k="+keyword);
+  public getCustomerById(id: number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.apiUrl}/customer/${id}`);
   }
 
-  public saveCustomer(customer: Customer): Observable<Customer>{
-    return this.http.post<Customer>("http://localhost:8082/customer/", customer);
+  public saveCustomer(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(`${this.apiUrl}/customer/`, customer);
   }
 
-  public deleteCustomer(customerId: Number){
-    return this.http.delete("http://localhost:8082/customer/"+customerId);
+  public updateCustomer(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(`${this.apiUrl}/customer/`, customer);
+  }
+
+  public deleteCustomer(customerId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/customer/${customerId}`);
   }
 }

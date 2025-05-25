@@ -1,0 +1,37 @@
+<div class="container mt-3 ">
+  <div class="row justify-content-center">
+  <div class="card col-md-6">
+    <div class="card-header">
+      Edit Customer
+    </div>
+    <div class="card-body" *ngIf="formGroup">
+      <form [formGroup]="formGroup" (ngSubmit)="handleUpdateCustomer()">
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control"
+                 [class.is-invalid]="formGroup.get('name')?.touched && formGroup.get('name')?.errors"
+                 formControlName="name">
+          <div class="invalid-feedback" *ngIf="formGroup.get('name')?.touched">
+            <span *ngIf="formGroup.get('name')?.errors?.['required']">Name is required</span>
+            <span *ngIf="formGroup.get('name')?.errors?.['minlength']">Name must be at least 4 characters</span>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control"
+                 [class.is-invalid]="formGroup.get('email')?.touched && formGroup.get('email')?.errors"
+                 formControlName="email">
+          <div class="invalid-feedback" *ngIf="formGroup.get('email')?.touched">
+            <span *ngIf="formGroup.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="formGroup.get('email')?.errors?.['email']">Please enter a valid email address</span>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button [disabled]="!formGroup.valid" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-secondary" (click)="router.navigateByUrl('/admin/customers')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>

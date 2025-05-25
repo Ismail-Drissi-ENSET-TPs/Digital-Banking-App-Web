@@ -1,0 +1,111 @@
+<div class="container py-4">
+  <div class="card shadow-sm border-0 rounded-4 mb-4">
+    <div class="card-header bg-primary text-white rounded-top-4">
+      <h5 class="mb-0" *ngIf="customer">Customer: {{ customer.name }}</h5>
+      <h5 class="mb-0" *ngIf="!customer">Customer Accounts</h5>
+    </div>
+    <div class="card-body">
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="customer">
+        <p><strong>ID:</strong> {{ customer.id }}</p>
+        <p><strong>Name:</strong> {{ customer.name }}</p>
+        <p><strong>Email:</strong> {{ customer.email }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Customer Accounts -->
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-info text-white rounded-top-4">
+          <h5 class="mb-0">Customer Accounts</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="accounts.length === 0" class="alert alert-info">
+            No accounts found for this customer.
+          </div>
+
+          <div *ngIf="accounts.length > 0" class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Type</th>
+                  <th>Balance</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let account of accounts">
+                  <td>{{ account.id }}</td>
+                  <td>{{ account.type }}</td>
+                  <td>{{ account.balance | number:'1.2-2' }}</td>
+                  <td>{{ account.status }}</td>
+                  <td>
+                    <button (click)="viewAccountOperations(account)" class="btn btn-info btn-sm">
+                      Operations
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Operations -->
+    <div class="col-md-6" *ngIf="selectedAccount">
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-success text-white rounded-top-4">
+          <h5 class="mb-0">Account Operations</h5>
+        </div>
+        <div class="card-body">
+          <div>
+            <p><strong>Account ID:</strong> {{ selectedAccount.id }}</p>
+            <p><strong>Type:</strong> {{ selectedAccount.type }}</p>
+            <p><strong>Balance:</strong> {{ selectedAccount.balance | number:'1.2-2' }}</p>
+            <p><strong>Status:</strong> {{ selectedAccount.status }}</p>
+          </div>
+
+          <ng-container *ngIf="accountObservable | async as accountDetails">
+            <div class="table-responsive mt-3">
+              <table class="table table-bordered table-striped align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th class="text-end">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let op of accountDetails.accountOperationDTOS">
+                    <td>{{ op.id }}</td>
+                    <td>{{ op.operationDate | date:'dd-MM-yyyy:HH-mm-ss' }}</td>
+                    <td>{{ op.type }}</td>
+                    <td class="text-end">{{ op.amount | number:'1.2-2' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-3 d-flex flex-wrap gap-2">
+              <button *ngFor="let item of [].constructor(accountDetails.totalPages); let page = index"
+                      (click)="gotoPage(page)"
+                      [ngClass]="page === currentPage ? 'btn btn-info' : 'btn btn-outline-info'"
+                      class="btn btn-sm">
+                {{ page }}
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

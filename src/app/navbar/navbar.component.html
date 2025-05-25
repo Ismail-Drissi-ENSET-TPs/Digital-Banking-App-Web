@@ -21,7 +21,7 @@
             <li><a class="dropdown-item" routerLink="/admin/customers" routerLinkActive="active">
               <i class="bi bi-list"></i> List Customers
             </a></li>
-            <li><a class="dropdown-item" routerLink="/admin/new-customer" routerLinkActive="active">
+            <li><a class="dropdown-item" *ngIf="authService.roles?.includes('ADMIN')" routerLink="/admin/new-customer" routerLinkActive="active">
               <i class="bi bi-person-plus"></i> New Customer
             </a></li>
           </ul>
