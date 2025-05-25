@@ -41,7 +41,7 @@ export class CustomersComponent {
   }
 
   searchCustomers(){
-    let keyword: String = this.searchFormGroup?.value.keyword;
+    let keyword: string = this.searchFormGroup?.value.keyword;
     this.customerService.searchCustomers(keyword).subscribe({
         next: (data) => {
           this.customers = data;

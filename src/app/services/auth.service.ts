@@ -2,6 +2,7 @@ import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { isPlatformBrowser } from '@angular/common';
+import { ConfigService } from './config-loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,17 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthService {
   private readonly ACCESS_TOKEN_KEY = 'access-token';
   private platformId = inject(PLATFORM_ID);
+  private apiUrl: string;
 
   isAuthenticated: boolean = false;
   roles: Array<string> | undefined;
   username: string | undefined;
   private token: string | null = null;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private config: ConfigService) {
+    config.loadConfig();
+    this.apiUrl = config.backendHost;
+
     // Only try to restore from localStorage in browser environment
     if (isPlatformBrowser(this.platformId)) {
       const storedToken = this.getAccessToken();
@@ -30,7 +35,7 @@ export class AuthService {
       headers: new HttpHeaders().set("Content-Type", "application/x-www-form-urlencoded")
     }
     let params = new HttpParams().set("username", username).set("password", password);
-    return this.httpClient.post("http://localhost:8082/auth/login", params, options);
+    return this.httpClient.post(`${this.apiUrl}/auth/login`, params, options);
   }
 
   public loadProfile(data: any) {
@@ -58,10 +63,10 @@ export class AuthService {
     this.roles = decoded.scope;
   }
 
-  public logout(){
-    this.isAuthenticated=false;
+  public logout() {
+    this.isAuthenticated = false;
     localStorage.removeItem(this.ACCESS_TOKEN_KEY);
     this.token = null;
-    this.username= undefined;
+    this.username = undefined;
   }
 }

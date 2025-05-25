@@ -3,14 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/customer.model';
 import { environment } from '../../environments/environment';
+import {ConfigService} from './config-loader.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  private apiUrl = environment.backendHost;
 
-  constructor(private http: HttpClient) {}
+  private apiUrl;
+
+  constructor(private http: HttpClient, private config: ConfigService) {
+    config.loadConfig();
+    this.apiUrl = config.backendHost;
+  }
 
   public getCustomers(): Observable<Array<Customer>> {
     return this.http.get<Array<Customer>>(`${this.apiUrl}/customers`);
