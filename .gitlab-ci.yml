@@ -80,8 +80,3 @@ update_stage:
     - git add custom-values.yaml
     - git commit -am "Update Image"
     - git push
-
-deploy_stage:
-  stage: deploy
-  script:
-    - echo "Deploy step not implemented yet"
