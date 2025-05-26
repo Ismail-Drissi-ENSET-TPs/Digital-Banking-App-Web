@@ -56,7 +56,7 @@ update_stage:
     # Setup SSH directory
     - mkdir -p ~/.ssh
     - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
 
     # Add GitLab.com to known_hosts to avoid authenticity prompt
     - ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts
