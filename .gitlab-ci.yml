@@ -3,6 +3,7 @@ stages:
   - test
   - build
   - deploy
+  - update
 
 image: node:18
 
@@ -44,6 +45,33 @@ build_stage:
       - image.tar
     when: on_success
 
+update_stage:
+  stage: update
+  image:
+    name: ubuntu:22.04
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+    - mkdir -p /root/.ssh
+    - echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa
+    - chmod 600 /root/.ssh/id_rsa
+    - ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    # run ssh-agent
+    - eval $(ssh-agent -s)
+    # add ssh key stored in SSH_PRIVATE_KEY variable to the agent store
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    # Git
+    - git config --global user.email "drissiisismail@gmail.com"
+    - git config --global user.name "drissiisismail"
+    - git clone git@gitlab.com:digitalbankingapp/digital-banking-app-helm-chart.git
+    - cd digital-banking-app-helm-chart
+    - ls -latr
+  script:
+    # Update Image TAG
+    - sed -i "/^frontend_image:/,/^[^ ]/s/^  tag: .*/  tag: ${CI_COMMIT_SHORT_SHA}/" custom-values.yaml
+    - git add custom-values.yaml
+    - git commit -am "Update Image"
+    - git push
 
 deploy_stage:
   stage: deploy
