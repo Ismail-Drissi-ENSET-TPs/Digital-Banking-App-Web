@@ -70,7 +70,6 @@ update_stage:
     - git config --global user.email "drissiisismail@gmail.com"
     - git config --global user.name "drissiisismail"
 
-    # Clone your Helm chart repository
     - git clone git@gitlab.com:digitalbankingapp/digital-banking-app-helm-chart.git
     - cd digital-banking-app-helm-chart
     - ls -latr
