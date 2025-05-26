@@ -68,7 +68,7 @@ update_stage:
     - ls -latr
   script:
     # Update Image TAG
-    - sed -i "/^frontend_image:/,/^[^ ]/s/^  tag: .*/  tag: ${CI_COMMIT_SHORT_SHA}/" custom-values.yaml
+    - "sed -i '/^frontend_image:/,/^[^ ]/s/^  tag: .*/  tag: ${CI_COMMIT_SHORT_SHA}/' custom-values.yaml"
     - git add custom-values.yaml
     - git commit -am "Update Image"
     - git push
