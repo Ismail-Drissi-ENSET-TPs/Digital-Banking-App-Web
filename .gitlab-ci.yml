@@ -1,7 +1,7 @@
 stages:
   - install
   - test
-  - build
+#  - build
   - update
 
 image: node:18
@@ -25,24 +25,24 @@ test_stage:
   script:
     - echo "Running tests..."
 
-build_stage:
-  stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:v1.9.0-debug
-    entrypoint: [""]
-  script:
-    - mkdir -p /kaniko/.docker
-    - >
-      echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}"
-      > /kaniko/.docker/config.json
-    - /kaniko/executor
-      --context "$CI_PROJECT_DIR"
-      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
-      --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
-  artifacts:
-    paths:
-      - image.tar
-    when: on_success
+#build_stage:
+#  stage: build
+#  image:
+#    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+#    entrypoint: [""]
+#  script:
+#    - mkdir -p /kaniko/.docker
+#    - >
+#      echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}"
+#      > /kaniko/.docker/config.json
+#    - /kaniko/executor
+#      --context "$CI_PROJECT_DIR"
+#      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
+#      --destination "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+#  artifacts:
+#    paths:
+#      - image.tar
+#    when: on_success
 
 update_stage:
   stage: update
