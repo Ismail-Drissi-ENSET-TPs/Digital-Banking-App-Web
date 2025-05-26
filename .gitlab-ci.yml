@@ -49,7 +49,6 @@ update_stage:
   image:
     name: ubuntu:22.04
   before_script:
-    # Install ssh-agent and git if not already installed
     - 'which ssh-agent || (apt-get update -y && apt-get install -y openssh-client git)'
 
     # Setup SSH directory
