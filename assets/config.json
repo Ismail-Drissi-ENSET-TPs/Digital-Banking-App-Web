@@ -1,0 +1,5 @@
+{
+  "backendHost": "localhost",
+  "backendPort": "8020",
+  "port": "4200"
+}

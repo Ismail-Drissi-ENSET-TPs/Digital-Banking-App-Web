@@ -1,0 +1,39 @@
+<!-- Profile Page -->
+<div class="profile-container">
+  <!-- Header -->
+  <div class="profile-header mb-4">
+    <div class="text-center">
+      <h1 class="profile-title mb-1">Mon Profil</h1>
+      <p class="profile-subtitle mb-0">Informations utilisateur</p>
+    </div>
+  </div>
+
+  <!-- Profile Card -->
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="profile-card">
+        <div class="profile-card-body text-center">
+          <!-- Avatar Section -->
+          <div class="avatar-section mb-4">
+            <div class="avatar-container">
+              <div class="avatar-placeholder">
+                {{userInitials}}
+              </div>
+            </div>
+          </div>
+
+          <!-- User Info -->
+          <h4 class="mb-2">{{userName}}</h4>
+          <p class="text-muted mb-3">{{ '@' + authService.username }}</p>
+
+          <!-- User Role -->
+          <div class="user-badges">
+            <span class="badge bg-primary">{{userRole}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

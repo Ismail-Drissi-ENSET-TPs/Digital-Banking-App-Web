@@ -1,0 +1,18 @@
+/* Add custom styles for customer accounts component */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.rounded-4 {
+  border-radius: 0.5rem;
+}
+
+.rounded-top-4 {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}

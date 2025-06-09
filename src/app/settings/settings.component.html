@@ -1,0 +1,86 @@
+<!-- Settings Page -->
+<div class="settings-container">
+  <!-- Header -->
+  <div class="settings-header mb-4">
+    <div class="text-center">
+      <h1 class="settings-title mb-1">Paramètres</h1>
+      <p class="settings-subtitle mb-0">Configuration de l'application</p>
+    </div>
+  </div>
+
+  <!-- Success/Error Messages -->
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    {{successMessage}}
+    <button type="button" class="btn-close" (click)="successMessage = undefined"></button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    {{errorMessage}}
+    <button type="button" class="btn-close" (click)="errorMessage = undefined"></button>
+  </div>
+
+  <!-- Settings Content -->
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="settings-card">
+        <div class="settings-card-header">
+          <h5 class="mb-0">
+            <i class="bi bi-gear me-2"></i>
+            Paramètres de l'Application
+          </h5>
+        </div>
+        <div class="settings-card-body">
+          <div class="row g-4">
+              <!-- App Version -->
+              <div class="col-12">
+                <div class="info-section">
+                  <h6 class="mb-3">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Version de l'Application
+                  </h6>
+                  <div class="app-info text-center">
+                    <div class="version-display">
+                      <span class="version-number">{{appVersion}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Theme Selection -->
+              <div class="col-12">
+                <div class="theme-section">
+                  <h6 class="mb-3">
+                    <i class="bi bi-palette me-2"></i>
+                    Mode d'Affichage
+                  </h6>
+                  <div class="theme-options">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="theme-option" [class.active]="selectedTheme === 'light'" (click)="selectTheme('light')">
+                          <div class="theme-label">
+                            <i class="bi bi-sun me-2"></i>
+                            Mode Clair
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="theme-option" [class.active]="selectedTheme === 'dark'" (click)="selectTheme('dark')">
+                          <div class="theme-label">
+                            <i class="bi bi-moon me-2"></i>
+                            Mode Sombre
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

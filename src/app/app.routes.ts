@@ -8,13 +8,19 @@ import {authenticationGuard} from './guards/authentication.guard';
 import {NotAuthorizedComponent} from './not-authorized/not-authorized.component';
 import {authorizationGuard} from './guards/authorization.guard';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {EditCustomerComponent} from './edit-customer/edit-customer.component';
+import {loginRedirectGuard} from './guards/login-redirect.guard';
+import {CustomerAccountsComponent} from './customer-accounts/customer-accounts.component';
+
+import {SettingsComponent} from './settings/settings.component';
+import {ProfileComponent} from './profile/profile.component';
 
 export const routes: Routes = [
   {
     path: "", redirectTo: "/login", pathMatch:"full"
   },
   {
-    path: "login", component: LoginComponent
+    path: "login", component: LoginComponent, canActivate: [loginRedirectGuard]
   },
   {
     path: "admin", component: AdminTemplateComponent, canActivate: [authenticationGuard], children:[
@@ -29,6 +35,19 @@ export const routes: Routes = [
       },
       {
         path:"new-customer", component: NewCustomerComponent, canActivate: [authorizationGuard]
+      },
+      {
+        path:"edit-customer/:id", component: EditCustomerComponent, canActivate: [authorizationGuard]
+      },
+      {
+        path:"customer-accounts/:id", component: CustomerAccountsComponent
+      },
+
+      {
+        path:"settings", component: SettingsComponent
+      },
+      {
+        path:"profile", component: ProfileComponent
       }
     ]
   },

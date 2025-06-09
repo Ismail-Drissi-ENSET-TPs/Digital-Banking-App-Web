@@ -1,29 +1,107 @@
-<div class="container mt-3">
-  <div class="row justify-content-center">
-    <div class="card col-md-6">
-      <div class="card-header">Login</div>
-      <div class="card-body" *ngIf="formGroup">
-        <form [formGroup]="formGroup" (ngSubmit)="handleLogin()">
-          <div class="mb-3">
-            <label class="form-label">Username</label>
-            <input type="text" class="form-control"
-                   [class.is-invalid]="formGroup.controls['username'].touched && formGroup.controls['username'].errors"
-                   formControlName="username">
-            <div class="invalid-feedback" *ngIf="formGroup.controls['username'].touched && formGroup.controls['username'].errors">
-              Username is required
+<!-- Modern Login Page -->
+<div class="login-container">
+  <div class="login-background">
+    <!-- Animated Background Elements -->
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+    </div>
+  </div>
+
+  <div class="login-content">
+    <div class="container-fluid">
+      <div class="row min-vh-100 align-items-center justify-content-center">
+        <div class="col-lg-5 col-md-7 col-sm-9">
+          <!-- Login Card -->
+          <div class="login-card">
+            <!-- Header -->
+            <div class="login-header text-center mb-4">
+              <div class="login-logo mb-3">
+                <div class="logo-icon">
+                  <i class="bi bi-bank2"></i>
+                </div>
+              </div>
+              <h1 class="login-title gradient-text">Digital Bank</h1>
+              <p class="login-subtitle">Connectez-vous à votre espace sécurisé</p>
             </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input type="password" class="form-control"
-                   [class.is-invalid]="formGroup.controls['password'].touched && formGroup.controls['password'].errors"
-                   formControlName="password">
-            <div class="invalid-feedback" *ngIf="formGroup.controls['password'].touched && formGroup.controls['password'].errors">
-              Password is required
+
+            <!-- Error Message -->
+            <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+              {{errorMessage}}
+              <button type="button" class="btn-close" (click)="errorMessage = undefined"></button>
             </div>
+
+            <!-- Login Form -->
+            <div class="login-form" *ngIf="formGroup">
+              <form [formGroup]="formGroup" (ngSubmit)="handleLogin()">
+                <!-- Username Field -->
+                <div class="form-floating mb-3">
+                  <input
+                    type="text"
+                    class="form-control login-input"
+                    id="username"
+                    placeholder="Nom d'utilisateur"
+                    [class.is-invalid]="formGroup.controls['username'].touched && formGroup.controls['username'].errors"
+                    formControlName="username">
+                  <label for="username">
+                    <i class="bi bi-person me-2"></i>
+                    Nom d'utilisateur
+                  </label>
+                  <div class="invalid-feedback" *ngIf="formGroup.controls['username'].touched && formGroup.controls['username'].errors">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    Le nom d'utilisateur est requis
+                  </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-floating mb-4">
+                  <input
+                    [type]="showPassword ? 'text' : 'password'"
+                    class="form-control login-input"
+                    id="password"
+                    placeholder="Mot de passe"
+                    [class.is-invalid]="formGroup.controls['password'].touched && formGroup.controls['password'].errors"
+                    formControlName="password">
+                  <label for="password">
+                    <i class="bi bi-lock me-2"></i>
+                    Mot de passe
+                  </label>
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    (click)="togglePasswordVisibility()">
+                    <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                  </button>
+                  <div class="invalid-feedback" *ngIf="formGroup.controls['password'].touched && formGroup.controls['password'].errors">
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    Le mot de passe est requis
+                  </div>
+                </div>
+
+
+
+                <!-- Login Button -->
+                <button
+                  type="button"
+                  class="btn btn-primary login-btn w-100 mb-3"
+                  [disabled]="loading"
+                  (click)="handleLogin()">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <i *ngIf="!loading" class="bi bi-box-arrow-in-right me-2"></i>
+                  {{loading ? 'Connexion...' : 'Se connecter'}}
+                </button>
+
+
+              </form>
+            </div>
+
+
           </div>
-          <button [disabled]="!formGroup.valid" class="btn btn-primary">Login</button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
+</div>
