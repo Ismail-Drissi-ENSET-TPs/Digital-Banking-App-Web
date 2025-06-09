@@ -73,4 +73,3 @@ Here are some screenshots of the application:
 ### Unauthorized Access Page
 ![Unauthorized Access Page](./screenshot/unauthrozied-page.png)
 
-`
