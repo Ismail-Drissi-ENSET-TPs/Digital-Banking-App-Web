@@ -1,7 +1,7 @@
 
 export const environment = {
   production: false,
-  backendHost : (process.env["BACKEND_HOST"] != undefined && process.env["BACKEND_PORT"] != undefined)? process.env["BACKEND_HOST"] + ":"+ process.env["BACKEND_PORT"]:"http://localhost:8082"
+  backendHost : "http://localhost:8082"
 };
 
 /*

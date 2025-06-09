@@ -1,2 +1,148 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<!-- Modern Admin Layout -->
+<div class="admin-layout">
+  <!-- Top Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary shadow-lg fixed-top">
+    <div class="container-fluid px-4">
+      <!-- Brand -->
+      <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/admin">
+        <div class="brand-icon me-2">
+          <i class="bi bi-bank2 fs-4"></i>
+        </div>
+        <span class="brand-text">Digital Bank</span>
+      </a>
+
+      <!-- Mobile Toggle -->
+      <button class="navbar-toggler border-0" type="button" (click)="toggleSidebar()">
+        <i class="bi bi-list fs-4"></i>
+      </button>
+
+      <!-- Top Right Menu -->
+      <div class="navbar-nav ms-auto d-flex flex-row align-items-center" *ngIf="authService.isAuthenticated">
+        <!-- User Profile -->
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+            <div class="user-avatar me-2">
+              <i class="bi bi-person-circle fs-4"></i>
+            </div>
+            <span class="d-none d-md-inline">{{authService.username}}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li><h6 class="dropdown-header">{{authService.username}}</h6></li>
+            <li><a class="dropdown-item" routerLink="/admin/profile"><i class="bi bi-person me-2"></i>Profil</a></li>
+            <li><a class="dropdown-item" routerLink="/admin/settings"><i class="bi bi-gear me-2"></i>Paramètres</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" (click)="handleLogout()">
+              <i class="bi bi-box-arrow-right me-2"></i>Déconnexion
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.sidebar-collapsed]="sidebarCollapsed" *ngIf="authService.isAuthenticated">
+    <div class="sidebar-content">
+      <!-- Dashboard -->
+      <div class="sidebar-section">
+        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+           class="sidebar-item">
+          <i class="bi bi-speedometer2"></i>
+          <span class="sidebar-text">Dashboard</span>
+        </a>
+      </div>
+
+      <!-- Main Navigation -->
+      <div class="sidebar-section">
+        <h6 class="sidebar-heading">Gestion</h6>
+
+        <!-- Customers -->
+        <div class="sidebar-group">
+          <a class="sidebar-item" (click)="toggleSubmenu('customers')"
+             [class.active]="activeSubmenu === 'customers'">
+            <i class="bi bi-people"></i>
+            <span class="sidebar-text">Clients</span>
+            <i class="bi bi-chevron-down sidebar-arrow"
+               [class.rotated]="activeSubmenu === 'customers'"></i>
+          </a>
+          <div class="sidebar-submenu" [class.show]="activeSubmenu === 'customers'">
+            <a routerLink="/admin/customers" routerLinkActive="active" class="sidebar-subitem">
+              <i class="bi bi-list-ul"></i>
+              <span>Liste des clients</span>
+            </a>
+            <a routerLink="/admin/new-customer" routerLinkActive="active" class="sidebar-subitem"
+               *ngIf="authService.roles?.includes('ADMIN')">
+              <i class="bi bi-person-plus"></i>
+              <span>Nouveau client</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Accounts -->
+        <div class="sidebar-group">
+          <a class="sidebar-item" (click)="toggleSubmenu('accounts')"
+             [class.active]="activeSubmenu === 'accounts'">
+            <i class="bi bi-wallet2"></i>
+            <span class="sidebar-text">Comptes</span>
+            <i class="bi bi-chevron-down sidebar-arrow"
+               [class.rotated]="activeSubmenu === 'accounts'"></i>
+          </a>
+          <div class="sidebar-submenu" [class.show]="activeSubmenu === 'accounts'">
+            <a routerLink="/admin/accounts" routerLinkActive="active" class="sidebar-subitem">
+              <i class="bi bi-list-ul"></i>
+              <span>Tous les comptes</span>
+            </a>
+            <a routerLink="/admin/new-account" routerLinkActive="active" class="sidebar-subitem"
+               *ngIf="authService.roles?.includes('ADMIN')">
+              <i class="bi bi-plus-circle"></i>
+              <span>Nouveau compte</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Operations -->
+        <a routerLink="/admin/operations" routerLinkActive="active" class="sidebar-item">
+          <i class="bi bi-arrow-left-right"></i>
+          <span class="sidebar-text">Opérations</span>
+        </a>
+      </div>
+
+      <!-- Administration -->
+      <div class="sidebar-section" *ngIf="authService.roles?.includes('ADMIN')">
+        <h6 class="sidebar-heading">Administration</h6>
+
+        <a routerLink="/admin/user-management" routerLinkActive="active" class="sidebar-item">
+          <i class="bi bi-person-gear"></i>
+          <span class="sidebar-text">Utilisateurs</span>
+        </a>
+
+        <a routerLink="/admin/audit-logs" routerLinkActive="active" class="sidebar-item">
+          <i class="bi bi-journal-text"></i>
+          <span class="sidebar-text">Logs d'audit</span>
+        </a>
+      </div>
+
+      <!-- Settings -->
+      <div class="sidebar-section mt-auto">
+        <h6 class="sidebar-heading">Système</h6>
+
+        <a routerLink="/admin/profile" routerLinkActive="active" class="sidebar-item">
+          <i class="bi bi-person-circle"></i>
+          <span class="sidebar-text">Mon Profil</span>
+        </a>
+
+        <a routerLink="/admin/settings" routerLinkActive="active" class="sidebar-item">
+          <i class="bi bi-gear"></i>
+          <span class="sidebar-text">Paramètres</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content" [class.sidebar-collapsed]="sidebarCollapsed">
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

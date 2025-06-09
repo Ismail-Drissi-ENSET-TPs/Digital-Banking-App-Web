@@ -1,0 +1,351 @@
+/* Modern Admin Layout Styles */
+
+/* Layout Structure */
+.admin-layout {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Top Navigation */
+.navbar {
+  height: 70px;
+  z-index: 1050;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.brand-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.user-avatar {
+  width: 35px;
+  height: 35px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 280px;
+  height: calc(100vh - 70px);
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1040;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-collapsed {
+  width: 70px;
+}
+
+.sidebar-content {
+  padding: 1.5rem 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-section {
+  margin-bottom: 2rem;
+}
+
+.sidebar-section:last-child {
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
+
+.sidebar-heading {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6c757d;
+  margin: 0 1.5rem 1rem 1.5rem;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-collapsed .sidebar-heading {
+  opacity: 0;
+}
+
+/* Sidebar Items */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1.5rem;
+  color: #495057;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.sidebar-item:hover {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
+  color: #667eea;
+  transform: translateX(4px);
+}
+
+.sidebar-item.active {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.15) 0%, transparent 100%);
+  color: #667eea;
+  font-weight: 600;
+}
+
+.sidebar-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  border-radius: 0 4px 4px 0;
+}
+
+.sidebar-item i {
+  font-size: 1.25rem;
+  width: 24px;
+  margin-right: 1rem;
+  text-align: center;
+}
+
+.sidebar-text {
+  flex: 1;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-collapsed .sidebar-text {
+  opacity: 0;
+}
+
+.sidebar-arrow {
+  font-size: 0.875rem;
+  transition: transform 0.3s ease;
+  opacity: 1;
+}
+
+.sidebar-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.sidebar-collapsed .sidebar-arrow {
+  opacity: 0;
+}
+
+/* Sidebar Submenu */
+.sidebar-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: rgba(102, 126, 234, 0.05);
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.sidebar-submenu.show {
+  max-height: 200px;
+}
+
+.sidebar-subitem {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #6c757d;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.sidebar-subitem:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  transform: translateX(4px);
+}
+
+.sidebar-subitem.active {
+  background: rgba(102, 126, 234, 0.15);
+  color: #667eea;
+  font-weight: 500;
+}
+
+.sidebar-subitem i {
+  font-size: 1rem;
+  width: 20px;
+  margin-right: 0.75rem;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 280px;
+  margin-top: 70px;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: calc(100vh - 70px);
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: 70px;
+}
+
+.content-wrapper {
+  padding: 2rem;
+  max-width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+  }
+
+  .sidebar:not(.sidebar-collapsed) {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .content-wrapper {
+    padding: 1rem;
+  }
+
+  .brand-text {
+    display: none;
+  }
+}
+
+/* Custom Scrollbar for Sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 126, 234, 0.5);
+}
+
+/* Dropdown Enhancements */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+}
+
+.dropdown-item {
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 0 0.5rem;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
+  color: #667eea;
+  transform: translateX(4px);
+}
+
+.dropdown-header {
+  font-weight: 600;
+  color: #495057;
+  padding: 0.75rem 1.5rem 0.5rem;
+}
+
+/* Notification Badge */
+.badge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Animation Classes */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-wrapper > * {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .admin-layout {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+  }
+
+  .sidebar {
+    background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
+    border-right-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .sidebar-item {
+    color: #e2e8f0;
+  }
+
+  .sidebar-heading {
+    color: #a0aec0;
+  }
+}

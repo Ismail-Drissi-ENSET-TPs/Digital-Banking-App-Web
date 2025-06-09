@@ -1,0 +1,132 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-info text-white rounded-top-4">
+          <h5 class="mb-0">
+            <i class="bi bi-person-gear me-2"></i>
+            Edit User
+          </h5>
+        </div>
+        <div class="card-body">
+          <!-- Loading Spinner -->
+          <div *ngIf="isLoading && !user" class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading user information...</p>
+          </div>
+
+          <!-- Success Message -->
+          <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ successMessage }}
+            <p class="mb-0 mt-2 small">Redirecting to user management...</p>
+          </div>
+
+          <!-- Error Message -->
+          <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{ errorMessage }}
+          </div>
+
+          <!-- User Info -->
+          <div *ngIf="user" class="alert alert-info">
+            <h6 class="mb-1">Editing user:</h6>
+            <strong>{{ user.username }}</strong> ({{ user.email }})
+            <br>
+            <small class="text-muted">
+              Created: {{ user.createdAt | date:'dd/MM/yyyy' }}
+              <span *ngIf="user.lastLogin"> | Last Login: {{ user.lastLogin | date:'dd/MM/yyyy HH:mm' }}</span>
+            </small>
+          </div>
+
+          <!-- Edit Form -->
+          <form [formGroup]="formGroup" (ngSubmit)="handleUpdateUser()" *ngIf="user && !isLoading">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Username <span class="text-danger">*</span></label>
+                  <input type="text" 
+                         class="form-control" 
+                         formControlName="username"
+                         [class.is-invalid]="formGroup.get('username')?.touched && formGroup.get('username')?.errors">
+                  <div class="invalid-feedback" *ngIf="formGroup.get('username')?.touched && formGroup.get('username')?.errors">
+                    <div *ngIf="formGroup.get('username')?.errors?.['required']">Username is required</div>
+                    <div *ngIf="formGroup.get('username')?.errors?.['minlength']">Username must be at least 3 characters</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" 
+                         class="form-control" 
+                         formControlName="email"
+                         [class.is-invalid]="formGroup.get('email')?.touched && formGroup.get('email')?.errors">
+                  <div class="invalid-feedback" *ngIf="formGroup.get('email')?.touched && formGroup.get('email')?.errors">
+                    <div *ngIf="formGroup.get('email')?.errors?.['required']">Email is required</div>
+                    <div *ngIf="formGroup.get('email')?.errors?.['email']">Please enter a valid email</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Roles <span class="text-danger">*</span></label>
+              <div class="row">
+                <div class="col-md-6" *ngFor="let role of availableRoles">
+                  <div class="form-check">
+                    <input class="form-check-input" 
+                           type="checkbox" 
+                           [value]="role.value"
+                           [checked]="formGroup.get('roles')?.value?.includes(role.value)"
+                           (change)="onRoleChange($event, role.value)">
+                    <label class="form-check-label">
+                      <strong>{{ role.label }}</strong>
+                      <br>
+                      <small class="text-muted">
+                        {{ role.value === 'ADMIN' ? 'Full system access and user management' : 'Standard user access' }}
+                      </small>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="formGroup.get('roles')?.touched && formGroup.get('roles')?.errors" class="text-danger small mt-1">
+                At least one role must be selected
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2 justify-content-end">
+              <button type="button" class="btn btn-secondary" (click)="cancel()" [disabled]="isLoading">
+                <i class="bi bi-x-circle me-1"></i>
+                Cancel
+              </button>
+              <button type="submit" 
+                      class="btn btn-info" 
+                      [disabled]="!formGroup.valid || isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!isLoading" class="bi bi-check-circle me-1"></i>
+                {{ isLoading ? 'Updating...' : 'Update User' }}
+              </button>
+            </div>
+          </form>
+
+          <!-- Security Note -->
+          <div class="mt-4 p-3 bg-light rounded" *ngIf="user">
+            <h6 class="mb-2">
+              <i class="bi bi-info-circle me-1"></i>
+              Security Note
+            </h6>
+            <p class="mb-0 small text-muted">
+              Changing user roles will affect their access permissions immediately. 
+              Admin users have full access to all system features including user management.
+              To change the password, use the "Reset Password" option in the user list.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

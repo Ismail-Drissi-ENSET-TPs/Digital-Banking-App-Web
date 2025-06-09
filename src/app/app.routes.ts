@@ -12,6 +12,9 @@ import {EditCustomerComponent} from './edit-customer/edit-customer.component';
 import {loginRedirectGuard} from './guards/login-redirect.guard';
 import {CustomerAccountsComponent} from './customer-accounts/customer-accounts.component';
 
+import {SettingsComponent} from './settings/settings.component';
+import {ProfileComponent} from './profile/profile.component';
+
 export const routes: Routes = [
   {
     path: "", redirectTo: "/login", pathMatch:"full"
@@ -38,6 +41,13 @@ export const routes: Routes = [
       },
       {
         path:"customer-accounts/:id", component: CustomerAccountsComponent
+      },
+
+      {
+        path:"settings", component: SettingsComponent
+      },
+      {
+        path:"profile", component: ProfileComponent
       }
     ]
   },

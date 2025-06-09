@@ -51,8 +51,11 @@ export class AuthService {
 
   public getAccessToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem(this.ACCESS_TOKEN_KEY);
+      const token = localStorage.getItem(this.ACCESS_TOKEN_KEY);
+      console.log('🔑 Getting token from localStorage:', token ? 'Token exists' : 'No token found');
+      return token;
     }
+    console.log('🔑 Getting token from memory:', this.token ? 'Token exists' : 'No token found');
     return this.token;
   }
 
@@ -65,8 +68,39 @@ export class AuthService {
 
   public logout() {
     this.isAuthenticated = false;
-    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.ACCESS_TOKEN_KEY);
+    }
     this.token = null;
     this.username = undefined;
+  }
+
+  public getApiUrl(): string {
+    return this.apiUrl;
+  }
+
+  // Diagnostic method
+  public debugAuthStatus(): void {
+    console.log('🔍 Auth Service Debug Status:');
+    console.log('  - isAuthenticated:', this.isAuthenticated);
+    console.log('  - username:', this.username);
+    console.log('  - roles:', this.roles);
+    console.log('  - token in memory:', this.token ? 'EXISTS' : 'NULL');
+
+    if (isPlatformBrowser(this.platformId)) {
+      const storedToken = localStorage.getItem(this.ACCESS_TOKEN_KEY);
+      console.log('  - token in localStorage:', storedToken ? 'EXISTS' : 'NULL');
+
+      if (storedToken) {
+        try {
+          const decoded: any = jwtDecode(storedToken);
+          console.log('  - token decoded:', decoded);
+          console.log('  - token expires:', new Date(decoded.exp * 1000));
+          console.log('  - token is expired:', decoded.exp * 1000 < Date.now());
+        } catch (error) {
+          console.error('  - token decode error:', error);
+        }
+      }
+    }
   }
 }

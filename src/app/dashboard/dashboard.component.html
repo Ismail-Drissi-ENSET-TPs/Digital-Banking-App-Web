@@ -1,88 +1,370 @@
-<div class="container-fluid py-3">
-  <!-- Summary Cards -->
-  <div class="row g-3 mb-4">
-    <div class="col-md-3">
-      <div class="card bg-primary text-white">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="card-title mb-0">Total Customers</h6>
-              <h2 class="mt-2 mb-0">{{totalCustomers}}</h2>
+<!-- Modern Dashboard -->
+<div class="dashboard-container">
+  <!-- Header Section -->
+  <div class="dashboard-header mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h1 class="dashboard-title mb-1">Dashboard</h1>
+        <p class="dashboard-subtitle mb-0">Vue d'ensemble de votre banque digitale</p>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-primary" (click)="refreshDashboard()" [disabled]="loading.customers || loading.accounts">
+          <i class="bi bi-arrow-clockwise me-1"></i>
+          Actualiser
+        </button>
+        <button class="btn btn-outline-warning" (click)="debugAuth()">
+          <i class="bi bi-bug me-1"></i>
+          Debug Auth
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row g-4 mb-4">
+    <!-- Total Customers -->
+    <div class="col-xl-3 col-md-6">
+      <div class="stats-card stats-card-primary">
+        <div class="stats-card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="stats-info">
+              <h6 class="stats-title">Total Clients</h6>
+              <h2 class="stats-value" [class.loading]="loading.customers">
+                <span *ngIf="!loading.customers">{{totalCustomers}}</span>
+                <div *ngIf="loading.customers" class="placeholder-glow">
+                  <span class="placeholder col-6"></span>
+                </div>
+              </h2>
+              <div class="stats-trend">
+                <i class="bi bi-arrow-up text-success"></i>
+                <span class="text-success">+12%</span>
+                <small class="text-muted ms-1">ce mois</small>
+              </div>
             </div>
-            <i class="bi bi-people display-4"></i>
+            <div class="stats-icon stats-icon-primary">
+              <i class="bi bi-people"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="card bg-success text-white">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="card-title mb-0">Total Accounts</h6>
-              <h2 class="mt-2 mb-0">{{totalAccounts}}</h2>
+
+    <!-- Total Accounts -->
+    <div class="col-xl-3 col-md-6">
+      <div class="stats-card stats-card-success">
+        <div class="stats-card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="stats-info">
+              <h6 class="stats-title">Total Comptes</h6>
+              <h2 class="stats-value" [class.loading]="loading.accounts">
+                <span *ngIf="!loading.accounts">{{totalAccounts}}</span>
+                <div *ngIf="loading.accounts" class="placeholder-glow">
+                  <span class="placeholder col-6"></span>
+                </div>
+              </h2>
+              <div class="stats-trend">
+                <i class="bi bi-arrow-up text-success"></i>
+                <span class="text-success">+8%</span>
+                <small class="text-muted ms-1">ce mois</small>
+              </div>
             </div>
-            <i class="bi bi-wallet2 display-4"></i>
+            <div class="stats-icon stats-icon-success">
+              <i class="bi bi-wallet2"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="card bg-info text-white">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="card-title mb-0">Total Operations</h6>
-              <h2 class="mt-2 mb-0">{{totalOperations}}</h2>
+
+    <!-- Total Operations -->
+    <div class="col-xl-3 col-md-6">
+      <div class="stats-card stats-card-info">
+        <div class="stats-card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="stats-info">
+              <h6 class="stats-title">Opérations</h6>
+              <h2 class="stats-value" [class.loading]="loading.accounts">
+                <span *ngIf="!loading.accounts">{{totalOperations}}</span>
+                <div *ngIf="loading.accounts" class="placeholder-glow">
+                  <span class="placeholder col-6"></span>
+                </div>
+              </h2>
+              <div class="stats-trend">
+                <i class="bi bi-arrow-up text-success"></i>
+                <span class="text-success">+24%</span>
+                <small class="text-muted ms-1">ce mois</small>
+              </div>
             </div>
-            <i class="bi bi-arrow-left-right display-4"></i>
+            <div class="stats-icon stats-icon-info">
+              <i class="bi bi-arrow-left-right"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="card bg-warning text-white">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="card-title mb-0">Total Balance</h6>
-              <h2 class="mt-2 mb-0">{{totalBalance | currency}}</h2>
+
+    <!-- Total Balance -->
+    <div class="col-xl-3 col-md-6">
+      <div class="stats-card stats-card-warning">
+        <div class="stats-card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="stats-info">
+              <h6 class="stats-title">Solde Total</h6>
+              <h2 class="stats-value" [class.loading]="loading.accounts">
+                <span *ngIf="!loading.accounts">{{totalBalance | currency:'EUR':'symbol':'1.0-0'}}</span>
+                <div *ngIf="loading.accounts" class="placeholder-glow">
+                  <span class="placeholder col-8"></span>
+                </div>
+              </h2>
+              <div class="stats-trend">
+                <i class="bi bi-arrow-up text-success"></i>
+                <span class="text-success">+15%</span>
+                <small class="text-muted ms-1">ce mois</small>
+              </div>
             </div>
-            <i class="bi bi-cash-stack display-4"></i>
+            <div class="stats-icon stats-icon-warning">
+              <i class="bi bi-cash-stack"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Charts -->
-  <div class="row g-3">
-    <!-- Operations by Type -->
-    <div class="col-md-6">
-      <div class="card h-100">
-        <div class="card-header">Operations by Type</div>
-        <div class="card-body">
-          <canvas baseChart
-                  [data]="operationsChartData"
-                  [type]="'doughnut'"
-                  [options]="chartOptions">
-          </canvas>
+  <!-- Charts and Analytics -->
+  <div class="row g-4 mb-4">
+    <!-- Operations by Type Chart -->
+    <div class="col-xl-4 col-lg-6">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h5 class="chart-title">Répartition des Opérations</h5>
+
+        </div>
+        <div class="chart-body">
+          <div class="chart-container">
+            <canvas baseChart
+                    [data]="operationsChartData"
+                    [type]="'doughnut'"
+                    [options]="chartOptions"
+                    style="max-height: 300px;">
+            </canvas>
+          </div>
+          <div class="chart-legend mt-3">
+            <div class="d-flex justify-content-around text-center">
+              <div>
+                <div class="legend-color bg-danger"></div>
+                <small class="text-muted">Débits</small>
+                <div class="fw-bold">{{operationCounts.DEBIT}}</div>
+              </div>
+              <div>
+                <div class="legend-color bg-success"></div>
+                <small class="text-muted">Crédits</small>
+                <div class="fw-bold">{{operationCounts.CREDIT}}</div>
+              </div>
+              <div>
+                <div class="legend-color bg-primary"></div>
+                <small class="text-muted">Virements</small>
+                <div class="fw-bold">{{operationCounts.TRANSFER}}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Monthly Transactions -->
-    <div class="col-md-6">
-      <div class="card h-100">
-        <div class="card-header">Monthly Transactions</div>
-        <div class="card-body">
-          <canvas baseChart
-                  [data]="monthlyChartData"
-                  [type]="'line'"
-                  [options]="chartOptions">
-          </canvas>
+    <!-- Account Types Chart -->
+    <div class="col-xl-4 col-lg-6">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h5 class="chart-title">Types de Comptes</h5>
+
+        </div>
+        <div class="chart-body">
+          <div class="chart-container">
+            <canvas baseChart
+                    [data]="accountTypesChartData"
+                    [type]="'pie'"
+                    [options]="chartOptions"
+                    style="max-height: 300px;">
+            </canvas>
+          </div>
+          <div class="chart-legend mt-3">
+            <div class="d-flex justify-content-around text-center">
+              <div>
+                <div class="legend-color bg-info"></div>
+                <small class="text-muted">Courants</small>
+                <div class="fw-bold">{{accountTypeCounts.CURRENT_ACCOUNT}}</div>
+              </div>
+              <div>
+                <div class="legend-color bg-success"></div>
+                <small class="text-muted">Épargne</small>
+                <div class="fw-bold">{{accountTypeCounts.SAVING_ACCOUNT}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="col-xl-4 col-lg-12">
+      <div class="chart-card h-100">
+        <div class="chart-header">
+          <h5 class="chart-title">Statistiques Rapides</h5>
+        </div>
+        <div class="chart-body">
+          <div class="quick-stats">
+            <div class="quick-stat-item">
+              <div class="d-flex align-items-center">
+                <div class="quick-stat-icon bg-primary">
+                  <i class="bi bi-person-check"></i>
+                </div>
+                <div class="ms-3">
+                  <h6 class="mb-0">Clients Totaux</h6>
+                  <h4 class="mb-0 text-primary">{{totalCustomers}}</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="quick-stat-item">
+              <div class="d-flex align-items-center">
+                <div class="quick-stat-icon bg-success">
+                  <i class="bi bi-wallet2"></i>
+                </div>
+                <div class="ms-3">
+                  <h6 class="mb-0">Comptes Totaux</h6>
+                  <h4 class="mb-0 text-success">{{totalAccounts}}</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="quick-stat-item">
+              <div class="d-flex align-items-center">
+                <div class="quick-stat-icon bg-warning">
+                  <i class="bi bi-graph-up"></i>
+                </div>
+                <div class="ms-3">
+                  <h6 class="mb-0">Croissance</h6>
+                  <h4 class="mb-0 text-warning">+15%</h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="quick-stat-item">
+              <div class="d-flex align-items-center">
+                <div class="quick-stat-icon bg-info">
+                  <i class="bi bi-clock-history"></i>
+                </div>
+                <div class="ms-3">
+                  <h6 class="mb-0">Dernière MAJ</h6>
+                  <small class="text-muted">{{currentDate | date:'short'}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Monthly Trends Chart -->
+  <div class="row g-4 mb-4">
+    <div class="col-12">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h5 class="chart-title">Évolution Mensuelle</h5>
+
+        </div>
+        <div class="chart-body">
+          <div class="chart-container">
+            <canvas baseChart
+                    [data]="monthlyChartData"
+                    [type]="'line'"
+                    [options]="chartOptions"
+                    style="height: 300px; max-height: 300px;">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activities -->
+  <div class="row g-4">
+    <!-- Recent Operations -->
+    <div class="col-xl-8">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h5 class="chart-title">Opérations Récentes</h5>
+          <a href="/admin/accounts" class="btn btn-sm btn-outline-primary">Voir tout</a>
+        </div>
+        <div class="chart-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Type</th>
+                  <th>Montant</th>
+                  <th>Description</th>
+                  <th>Date</th>
+                  <th>Utilisateur</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let operation of recentOperations.slice(0, 5)">
+                  <td>
+                    <span class="badge" [ngClass]="getOperationBadgeClass(operation.type)">
+                      <i [ngClass]="getOperationIcon(operation.type)" class="me-1"></i>
+                      {{operation.type}}
+                    </span>
+                  </td>
+                  <td class="fw-bold" [class]="operation.type === 'DEBIT' ? 'text-danger' : 'text-success'">
+                    {{operation.amount | currency:'EUR':'symbol':'1.2-2'}}
+                  </td>
+                  <td>{{operation.description}}</td>
+                  <td>
+                    <small class="text-muted">{{operation.operationDate | date:'short'}}</small>
+                  </td>
+                  <td>
+                    <small class="text-muted">Système</small>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Customers -->
+    <div class="col-xl-4">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h5 class="chart-title">Nouveaux Clients</h5>
+          <a href="/admin/customers" class="btn btn-sm btn-outline-primary">Voir tout</a>
+        </div>
+        <div class="chart-body">
+          <div class="recent-customers">
+            <div class="customer-item" *ngFor="let customer of recentCustomers">
+              <div class="d-flex align-items-center">
+                <div class="customer-avatar">
+                  {{customer.name.charAt(0).toUpperCase()}}
+                </div>
+                <div class="ms-3 flex-grow-1">
+                  <h6 class="mb-0">{{customer.name}}</h6>
+                  <small class="text-muted">{{customer.email}}</small>
+                </div>
+                <small class="text-muted">
+                  {{customer.createdAt | date:'short'}}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>

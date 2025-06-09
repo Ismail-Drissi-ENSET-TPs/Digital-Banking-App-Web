@@ -22,7 +22,7 @@ export class CustomerService {
   }
 
   public searchCustomers(keyword: string = ""): Observable<Array<Customer>> {
-    return this.http.get<Array<Customer>>(`${this.apiUrl}/customers/search?k=${keyword}`);
+    return this.http.get<Array<Customer>>(`${this.apiUrl}/customer/search?k=${keyword}`);
   }
 
   public getCustomerById(id: number): Observable<Customer> {
